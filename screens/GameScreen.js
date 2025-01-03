@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Card from "../components/ui/Card";
+import { Ionicons } from "@expo/vector-icons";
 
 function generateRandomNumber(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -62,10 +63,10 @@ const GameScreen = ({ pickedNumber, onGameOver }) => {
       <Card title="Higher or Lower?">
         <View style={styles.btnsContainer}>
           <PrimaryButton onPress={nextGuessHandler.bind(this, "higher")}>
-            +
+            <Ionicons name="md-remove" size={24} color="white" />
           </PrimaryButton>
           <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-            -
+            <Ionicons name="md-add" size={24} color="white" />
           </PrimaryButton>
         </View>
       </Card>
