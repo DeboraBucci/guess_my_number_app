@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
+    fontFamily: "open-sans",
     color: Colors.accent500,
     fontSize: 24,
   },
