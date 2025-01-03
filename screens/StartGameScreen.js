@@ -1,7 +1,8 @@
-import { Alert, StyleSheet, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { useState } from "react";
 import Colors from "../constants/colors";
+import Title from "../components/ui/Title";
 
 function StartGameScreen({ onPickNumber }) {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -28,20 +29,25 @@ function StartGameScreen({ onPickNumber }) {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        autoCapitalize="none"
-        autoCorrect={false}
-        value={enteredNumber}
-        onChangeText={numberInputHandler}
-      />
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number!</Title>
+      <View style={styles.inputContainer}>
+        <Text style={styles.instructionText}>Enter a Number (1 to 99)</Text>
 
-      <View style={styles.btnContainer}>
-        <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
-        <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={enteredNumber}
+          onChangeText={numberInputHandler}
+        />
+
+        <View style={styles.btnContainer}>
+          <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+          <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+        </View>
       </View>
     </View>
   );
@@ -50,12 +56,17 @@ function StartGameScreen({ onPickNumber }) {
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    marginTop: 100,
+    alignItems: "center",
+  },
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
     marginHorizontal: 24,
-    marginTop: 100,
+    marginTop: 36,
     borderRadius: 8,
     backgroundColor: Colors.primary800,
 
@@ -79,6 +90,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: Colors.accent500,
     borderBottomColor: Colors.accent500,
+  },
+
+  instructionText: {
+    color: Colors.accent500,
+    fontSize: 24,
   },
 
   btnContainer: {
