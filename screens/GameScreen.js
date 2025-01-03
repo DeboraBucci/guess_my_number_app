@@ -20,9 +20,8 @@ let minBoundary = 1,
   maxBoundary = 100;
 
 const GameScreen = ({ pickedNumber, onGameOver }) => {
-  const [currentGuess, setCurrentGuess] = useState(
-    generateRandomNumber(minBoundary, maxBoundary, pickedNumber)
-  );
+  const initialGuess = generateRandomNumber(1, 100, pickedNumber);
+  const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
   useEffect(() => {
     if (currentGuess === pickedNumber) {
@@ -63,10 +62,10 @@ const GameScreen = ({ pickedNumber, onGameOver }) => {
       <Card title="Higher or Lower?">
         <View style={styles.btnsContainer}>
           <PrimaryButton onPress={nextGuessHandler.bind(this, "higher")}>
-            <Ionicons name="md-remove" size={24} color="white" />
+            <Ionicons name="md-add" size={24} color="white" />
           </PrimaryButton>
           <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-            <Ionicons name="md-add" size={24} color="white" />
+            <Ionicons name="md-remove" size={24} color="white" />
           </PrimaryButton>
         </View>
       </Card>
