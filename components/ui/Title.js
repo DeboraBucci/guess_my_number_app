@@ -15,5 +15,6 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     fontFamily: "open-sans-bold",
+    maxWidth: "80%",
   },
 });

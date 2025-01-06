@@ -5,6 +5,7 @@ import {
   StatusBar,
   Alert,
   FlatList,
+  useWindowDimensions,
 } from "react-native";
 import Title from "../components/ui/Title";
 import { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ import PrimaryButton from "../components/ui/PrimaryButton";
 import Card from "../components/ui/Card";
 import { Ionicons } from "@expo/vector-icons";
 import GuessLogItem from "../components/game/GuessLogItem";
+import Colors from "../constants/colors";
 
 function generateRandomNumber(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -31,6 +33,7 @@ const GameScreen = ({ pickedNumber, onGameOver }) => {
   const initialGuess = generateRandomNumber(1, 100, pickedNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([initialGuess]);
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     if (currentGuess === pickedNumber) {
@@ -72,10 +75,8 @@ const GameScreen = ({ pickedNumber, onGameOver }) => {
 
   const guessRoundsListLength = guessRounds.length;
 
-  return (
-    <View style={styles.screen}>
-      <Title>Opponent's Guess</Title>
-
+  let content = (
+    <>
       <NumberContainer>{currentGuess}</NumberContainer>
 
       <Card title="Higher or Lower?">
@@ -88,6 +89,30 @@ const GameScreen = ({ pickedNumber, onGameOver }) => {
           </PrimaryButton>
         </View>
       </Card>
+    </>
+  );
+
+  if (width > 500) {
+    content = (
+      <View style={styles.btnsContainerWide}>
+        <PrimaryButton onPress={nextGuessHandler.bind(this, "higher")}>
+          <Ionicons name="md-add" size={24} color="white" />
+        </PrimaryButton>
+
+        <NumberContainer>{currentGuess}</NumberContainer>
+
+        <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+          <Ionicons name="md-remove" size={24} color="white" />
+        </PrimaryButton>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.screen}>
+      <Title>Opponent's Guess</Title>
+
+      {content}
 
       <View style={{ flex: 1, padding: 16 }}>
         <FlatList
@@ -112,10 +137,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     paddingTop: StatusBar.currentHeight + 32,
+    alignItems: "center",
   },
 
   btnsContainer: {
     padding: 16,
     flexDirection: "row",
+  },
+
+  btnsContainerWide: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
